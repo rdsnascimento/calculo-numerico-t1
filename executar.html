@@ -1,0 +1,133 @@
+<html>
+
+<head>
+	<title>Trabalho 1 - CNC</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css"> <!-- framework para interface grafica -->
+	<link rel="stylesheet" href="assets/css/formatacao.css"> <!-- formatacao da pagina -->
+	<script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script> <!-- jquery -->
+</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-2"></div>
+			<div class="col-md-8" id="conteudo">
+				<!--<form action="#" onsubmit="main()">-->
+					<!-- Titulo -->
+					<div class="row">
+						<div class="col-md-12">
+							<center><h3><span style="text-transform: capitalize;"> Método da Bissecção e método da falsa posição </span></h3></center>
+						</div>
+					</div><br/><br/>
+
+					<!-- Descrição da função -->
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<select class="form-control" id="menu">
+									<option value="0" disabled selected>Escolha o exercício</option>
+									<option value="1">1.1 - Bissecção; f(x) = x³-9x+5; [0.5, 1]; precisão = 0.01</option>
+									<option value="2">2.1 - Falsa Posição; f(x) = x³-9x+3; [0, 1]; precisão = 0.0005</option>
+									<option value="3">3.1 - Falsa Posição; f(x) = e³-3x; [0,1]; i = 17</option>
+									<option value="4">3.2 - Falsa Posição; f(x) = eˣ-3x; [1,2]; i = 28</option>
+									<option value="5">3.3 - Bissecção; f(x) = eˣ-3x; [0,1]; i = 30</option>
+									<option value="6">3.4 - Bissecção; f(x) = eˣ-3x; [1,2]; i = 18</option>
+									<option value="7">4.1 - Falsa Posição; f(x) = 2,75x³+18x²-21x-12; [-1,0]; precisão = 0,01</option>
+									<option value="8">4.2 - Falsa Posição; f(x) = 2,75x³+18x²-21x-12; [-1,0];  i = 20</option>
+									<option value="9">4.3 - Bissecção; f(x) = 2,75x³+18x²-21x-12;  [-1,0]; precisão = 0,01</option>
+									<option value="10">4.4 - Bissecção; f(x) = 2,75x³+18x²-21x-12;  [-1,0]; i = 20</option>
+								</select>
+							</div>
+						</div>
+					</div><br/><br/>
+
+					<!-- entrada -->
+					<fieldset id="entradas" disabled>
+						<!-- Iteração ou precisão -->
+						<div class="row">
+							<div class="col-md-6" style="padding-bottom: 30px;">
+								<label class="switch">
+									<input type="checkbox" id="check_bisseccao">
+									<span class="slider round"></span>
+								</label>
+								<div id="tipo_metodo" style="padding-left: 50px; margin-top: -30px">Bissecção</div>
+							</div>
+							<div class="col-md-6" style="padding-bottom: 30px;">
+								<label class="switch">
+									<input type="checkbox" id="check_precisao">
+									<span class="slider round"></span>
+								</label>
+								<div id="precisao_iteracao" style="padding-left: 50px; margin-top: -30px">Precisão</div>
+							</div>
+						</div>
+						
+						<!-- LER a, b, x -->
+						<div class="row">
+							<div class="col-md-6">
+								<div class="row">
+									<div class="col-md-6">
+										<label for="a">a</label><input id="a" type="text" class="form-control" pattern="[0-9]{.}" autocomplete="off" required/><br/> <!-- Ler a -->
+									</div>
+									<div class="col-md-6">
+										<label for="b">b</label><input id="b" type="text" class="form-control" pattern="[0-9]{.}" autocomplete="off" required/><br/>	<!-- Ler b -->
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="row">
+									<div class="col-md-6">
+										<label for="precisao">Precisão</label><input id="precisao" type="text" class="form-control" pattern="[0-9]{.}" autocomplete="off" required/><br/>	<!-- Ler x -->
+									</div>
+									<div class="col-md-6">
+										<label for="iteracao">Iteração</label><input id="iteracao" type="text" class="form-control" pattern="[0-9]{.}" autocomplete="off" required/><br/>	<!-- Ler x -->
+									</div>
+								</div>
+							</div>
+						</div><br/>
+					</fieldset>
+
+					<!-- Botao limpar e botao calcular -->
+					<div class="row">
+						<div class="col-md-6">
+							<button type="button" onClick="limpar();" class="btn btn-danger btn-lg btn-block">Limpar</button> <!-- Limpar -->
+						</div>
+
+						<div class="col-md-6">
+							<button type="button" onclick="main();" class="btn btn-primary btn-lg btn-block">Calcular</button> <!-- Calcular -->
+						</div>
+					</div>
+					<br/><br/><br/>
+
+					<!-- Resultado -->
+					<div class="row" id="tabela" style="display: none;">
+						<div style="font-size: 23px;"><center>Resultado</center><br/></div>
+						<div class="col-md-12">
+							<table class="table table-striped">
+								<thead>
+									<tr><th scope="col">i&nbsp&nbsp&nbsp</th><th scope="col">a</th><th scope="col">b</th><th scope="col">x</th><th scope="col">f(x)</th></tr> <!-- Títulos da tabela -->
+								</thead>
+								<tbody id="result"></tbody> <!-- Onde é mostrado o resultado -->
+							</table>
+						</div>
+					</div>
+					<br/>
+				<!--</form>-->
+			</div>
+			<div class="col-md-2"></div>
+		</div>
+	</div>
+
+	<section>
+		<p><center><small>Desenvolvido por: Laerte Cardozo, Rafael Nascimento e Samuel Oliveira</small></center></p><br/>
+	</section>
+</body>
+
+<script type="text/javascript" src="calculo.js"></script> <!-- script que faz os cálculos -->
+<script type="text/javascript" src="assets/js/menu_seletor.js"></script> <!-- script que faz os cálculos -->
+<script src="assets/js/bootstrap.min.js"></script> <!-- framework para interface grafica -->
+
+</html>
